@@ -147,6 +147,8 @@ static const char *s_ota_receive_success_response = "+WEBSERVERRSP:4\r\n";
 static const char *s_ota_receive_fail_response = "+WEBSERVERRSP:5\r\n";
 static SLIST_HEAD(router_fail_list_head_, router_obj) s_router_fail_list = SLIST_HEAD_INITIALIZER(s_router_fail_list);
 static const char *TAG = "at-web";
+static const char *nssid = "\r\nnssid";
+static const char *npwd = "\r\nnpwd";
 
 static uint8_t at_web_get_mac_match_len(uint8_t *mac1, uint8_t *mac2, uint8_t mac_length)
 {
@@ -219,8 +221,11 @@ static esp_err_t at_web_try_connect(uint8_t *ssid, uint8_t *password, uint8_t *b
 
         if (bits & ESP_AT_WEB_WIFI_CONNECTED_BIT) {
             ESP_LOGI(TAG, "connected to ap SSID:%s", temp_ssid);
-            printf("NSSID:%s\r\n",sta.ssid);
-            printf("NPWD:%s\r\n",sta.password);
+            
+            esp_at_port_write_data(nssid,strlen(nssid);
+            esp_at_port_write_data(sta.ssid,strlen(sta.ssid));
+            esp_at_port_write_data(npwd,strlen(npwd));
+            esp_at_port_write_data(sta.password,strlen(sta.password));
         } else if (bits & ESP_AT_WEB_WIFI_FAIL_BIT) {
             ESP_LOGI(TAG, "connecting to SSID:%s, reconnect timeout", temp_ssid);
             ret = ESP_ERR_TIMEOUT;
