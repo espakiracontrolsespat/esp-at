@@ -54,6 +54,12 @@ jobs:
     - name: Install compilation environment
       run: |
         ./build.py install
+    # clean build
+    - name: Clean build
+      run: |
+        rm -rf build
+        rm -rf managed_components
+    
     - name: Compile
       run: |
         ./build.py build
