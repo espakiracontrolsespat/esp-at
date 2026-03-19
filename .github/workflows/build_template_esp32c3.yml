@@ -61,7 +61,7 @@ jobs:
     
     - name: Install compilation environment
       run: |
-         echo "2" | ./build.py install
+          printf "2\n1\n" | ./build.py install
 
     - name: Compile
       run: |
