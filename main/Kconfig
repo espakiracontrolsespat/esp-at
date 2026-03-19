@@ -339,14 +339,14 @@ config AT_EAP_COMMAND_SUPPORT
 
 config AT_WEB_SERVER_SUPPORT
     bool "AT WEB Server command support."
-    default "n"
+    default "y"
     depends on AT_ENABLE
     help
       Please enable this configure if you want use web server.
 
 config AT_WEB_USE_FS
     bool "Use filesystem to store html"
-    default "n"
+    default "y"
     depends on AT_WEB_SERVER_SUPPORT && AT_FS_COMMAND_SUPPORT
     help
         If enable this configure, html will be stored in filesystem (Please enable AT FS Command).
