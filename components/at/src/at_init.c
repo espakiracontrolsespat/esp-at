@@ -141,8 +141,10 @@ static void at_bt_controller_mem_release(void)
 __attribute__((weak)) void esp_at_ready_before(void)
 {
 #ifdef CONFIG_AT_SELF_COMMAND_SUPPORT
-    at_exe_cmd("AT+GMR\r\n", "OK", 1000);
-    at_exe_cmd("AT+SYSRAM?\r\n", "OK", 1000);
+ //   at_exe_cmd("AT+GMR\r\n", "OK", 1000);
+ //   at_exe_cmd("AT+SYSRAM?\r\n", "OK", 1000);
+    at_exe_cmd("AT+UART_DEF=9600,8,1,0,1\r\n","OK",1000);
+    at_exe_cmd("ATE0","OK",1000);
 #endif
 }
 
