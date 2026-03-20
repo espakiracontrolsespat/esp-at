@@ -181,10 +181,7 @@ static uint8_t at_web_get_mac_match_len(uint8_t *mac1, uint8_t *mac2, uint8_t ma
  */
 static esp_err_t at_web_try_connect(uint8_t *ssid, uint8_t *password, uint8_t *bssid, EventGroupHandle_t connect_event)
 {
-    esp_at_port_write_data((uint8_t *)nssid, strlen(nssid));
-    esp_at_port_write_data(ssid, strlen(ssid));
-    esp_at_port_write_data((uint8_t *)npwd,strlen(npwd));
-    esp_at_port_write_data(password,strlen(password));
+
     esp_err_t ret;
     EventBits_t bits;
     char temp_ssid[ESP_AT_WEB_WIFI_SSID_LEN_DEFAULT + 1] = {0};
@@ -225,13 +222,6 @@ static esp_err_t at_web_try_connect(uint8_t *ssid, uint8_t *password, uint8_t *b
 
         if (bits & ESP_AT_WEB_WIFI_CONNECTED_BIT) {
             ESP_LOGI(TAG, "connected to ap SSID:%s", temp_ssid);
-            
-            //esp_at_port_write_data(nssid,strlen(nssid));
-            //esp_at_port_write_data(sta.ssid,strlen(sta.ssid));
-            esp_at_port_write_data((uint8_t *)nssid, strlen(nssid));
-            esp_at_port_write_data(sta.ssid, strlen((const char *)sta.ssid));
-            esp_at_port_write_data((uint8_t *)npwd,strlen(npwd));
-            esp_at_port_write_data(sta.password,strlen((const char *)sta.password));
         } else if (bits & ESP_AT_WEB_WIFI_FAIL_BIT) {
             ESP_LOGI(TAG, "connecting to SSID:%s, reconnect timeout", temp_ssid);
             ret = ESP_ERR_TIMEOUT;
@@ -1214,6 +1204,12 @@ static esp_err_t config_wifi_post_handler(httpd_req_t *req)
         ESP_LOGD(TAG, "ssid(%d):%s password:(%d):%s\r\n",
                  strlen((char *)wifi_config.ssid), wifi_config.ssid, strlen((char *)wifi_config.password), wifi_config.password);
 
+        esp_at_port_write_data((uint8_t *)nssid, strlen(nssid));
+        esp_at_port_write_data(wifi_config.ssid, strlen((char *)wifi_config.ssid));
+        esp_at_port_write_data((uint8_t *)npwd,strlen(npwd));
+        esp_at_port_write_data(wifi_config.password,strlen((char *)wifi_config.password));
+        
+        
         // check the validity of ssid and password
         if (strlen((char *)&wifi_config.ssid) == 0) {
             ssid_is_null = true;
